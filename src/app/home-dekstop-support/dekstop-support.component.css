@@ -1,0 +1,241 @@
+.service-requests {
+    display: flex;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient button background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 10px 0;
+    transition: background 0.3s, transform 0.2s; /* Smooth transition effects */
+  }
+  
+  button:hover {
+    background: linear-gradient(135deg, #0056b3, #003d7a); /* Darker gradient on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+  }
+  
+.sidebar {
+  width: 200px;
+  background-color: #007bff; /* Lighter blue background for better logo visibility */
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow for the sidebar */
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+  
+  .sidebar h2 {
+    color: #fff; /* White color for the sidebar heading */
+    font-size: 1.5em; /* Larger font size for the heading */
+    margin-bottom: 20px; /* Space below the heading */
+  }
+  
+  .sidebar button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Space between buttons */
+    text-align: left; /* Align text to the left */
+    font-size: 16px; /* Font size for button text */
+    transition: background-color 0.3s, border 0.3s; /* Smooth transition for background and border */
+  }
+  
+  /* Highlight the clicked button */
+  .sidebar button:hover,
+  .sidebar button:focus {
+    background-color: #0056b3; /* Darker background on hover or focus */
+    outline: none; /* Remove default outline */
+  }
+  
+  /* Keep the clicked button highlighted */
+  .sidebar button:focus {
+    border: 2px solid #fff; /* White border for focused button */
+  }
+  
+  /* Use a separate class to indicate active state */
+  .sidebar button.active {
+    background-color: #0056b3; /* Darker background when active */
+    border: 2px solid #fff; /* White border for active button */
+  }
+  
+  
+  .logo img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .logo img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu button {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .menu .menu-item {
+    position: relative;
+  }
+  
+  .main-content {
+    margin-left: 220px; /* Adjust based on the sidebar width */
+    padding: 20px;
+    width: calc(100% - 220px); /* Adjust based on the sidebar width */
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header button {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .header button:hover {
+    background: linear-gradient(135deg, #0056b3, #003d7a);
+    transform: scale(1.05);
+  }
+  p {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 10px 0;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  button:hover {
+    background: linear-gradient(135deg, #0056b3, #003d7a);
+    transform: scale(1.05);
+  }
+  
+  /* Add some space for chatbot at the bottom */
+  app-chatbot {
+    margin-top: 40px;
+  }
+
+  /* Styling for the service requests list */
+.service-requests ul {
+    list-style-type: none; /* Remove default list bullets */
+    padding: 0;
+    margin: 0;
+}
+
+.service-requests ul li {
+    background-color: #f9f9f9; /* Light background for each list item */
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #333;
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.service-requests ul li:hover {
+    background-color: #e8f0fe; /* Highlight on hover */
+}
+
+.service-requests ul li:before {
+    content: '\2022'; /* Add a bullet point before each item */
+    color: #007bff; /* Color of the bullet */
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.service-requests ul li span {
+    font-weight: bold;
+    color: #007bff; /* Blue color for important text */
+}
+
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .service-requests ul li {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+.document-details-table {
+  width: 100%; /* Full width of the parent container */
+  border-collapse: collapse; /* Merge table borders */
+  margin-top: 10px; /* Space above the table */
+  font-family: Arial, sans-serif; /* Font for the table text */
+}
+
+.document-details-table th, 
+.document-details-table td {
+  border: 1px solid #dddddd; /* Light gray border */
+  text-align: left; /* Align text to the left */
+  padding: 8px; /* Padding inside table cells */
+}
+
+.document-details-table th {
+  background-color: #f2f2f2; /* Light gray background for header */
+  color: #333333; /* Darker text color for better contrast */
+}
+
+.document-details-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Alternate row background for better readability */
+}
+
+.document-details-table tr:hover {
+  background-color: #e0e0e0; /* Highlight row on hover */
+}
+
+.document-details-table td {
+  vertical-align: top; /* Align text to the top of the cell */
+}
+
+.document-details-table strong {
+  color: #000; /* Color for strong text */
+}

@@ -1,0 +1,70 @@
+<div class="admin-container">
+  <div class="sidebar">
+    <div class="logo">
+      <img src="https://trial.chainsys.com/appplatform/images/chainsys-platform-logo.png" alt="ChainSys Logo">
+    </div>
+    <div class="menu">
+      <h2></h2>
+      <button class="active" (click)="home()">
+        <i class="fas fa-home"></i> Home
+      </button>
+
+      <button (click)="showLeaveSummary()">
+        <i class="fas fa-chart-pie"></i> Leave Summary
+      </button>
+
+      <button (click)="showEmployeeSummary()">
+        <i class="fas fa-users"></i> Leave Summary of all Employees
+      </button>
+
+      <button (click)="showEmployeeLeaveDetails()">
+        <i class="fas fa-user-tag"></i> Summary of a particular Employee
+      </button>
+
+      <button (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+      
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="header">
+      <h2>Welcome! Admin</h2>
+    </div>
+    <div class="section-box">
+      <h2 style="color: blue;"><i class="fas fa-home"></i> Home</h2>
+      <p>The central point of the dashboard, the Home section allows you to return to the main dashboard view. From here, you can see all available options and navigate to different features of the admin dashboard.</p>
+    </div>
+
+    <div class="section-box">
+      <h2 style="color: blue;"><i class="fas fa-chart-pie"></i> Leave Summary</h2>
+      <ul>
+        <li>
+          <i class="fas fa-calendar-day"></i>
+          <strong>No. of Employees took leave Today:</strong> It is a title card that shows the count of employees who have taken leave today and click to view the date-wise Leave Summary.
+        </li>
+        <li>
+          <i class="fas fa-calendar-week"></i>
+          <strong>No. of Employees took leave this Week:</strong> It is a title card that shows the count of employees who have taken leave this week and click to view the week-wise Leave Summary.
+        </li>
+        <li>
+          <i class="fas fa-calendar-alt"></i>
+          <strong>No. of Employees took leave this Month:</strong> It is a title card that shows the count of employees who have taken leave this month and click to view the month-wise Leave Summary.
+        </li>
+        <li>
+          <i class="fas fa-calendar"></i>
+          <strong>No. of Employees took leave this Year:</strong> It is a title card that shows the count of employees who have taken leave this year.
+        </li>
+      </ul>
+    </div>
+
+    <div class="section-box">
+      <h2  style="color: blue;"><i class="fas fa-users"></i> Leave Summary of all Employees</h2>
+      <p>Here, you can check the detailed leave records for all employees. This feature allows for tracking, enabling you to manage an employee’s leave balance.</p>
+    </div>
+
+    <div class="section-box">
+      <h2  style="color: blue;"><i class="fas fa-user-tag"></i> Summary of a particular Employee</h2>
+      <p>Here, you can check the detailed leave records for any specific employee. This feature allows for individualized tracking, enabling you to manage an employee’s leave balance, review their leave history, and ensure they are adhering to company leave policies.</p>
+    </div>
+  </div>

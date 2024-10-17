@@ -1,0 +1,252 @@
+<div class="service-requests">
+    <div class="sidebar">
+        <div class="logo">
+          <img src="https://trial.chainsys.com/appplatform/images/chainsys-platform-logo.png" alt="ChainSys Logo">
+        </div>
+        <div class="menu">
+          <h2></h2>
+
+          <button (click)="home()">
+            <i class="fas fa-home"></i> Home
+          </button>
+          
+          <button (click)="showMyDetails()">
+            <i class="fas fa-user"></i> My Details
+          </button>
+          
+      <!-- Button for Leave Menu -->
+      <button (click)="toggleLeaveMenu()">
+        <i class="fas fa-clipboard-list"></i> Leave
+        <i [class]="isLeaveMenuOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+      </button>
+      
+      <!-- Submenu for Leave Details and Leave Report -->
+      <div *ngIf="isLeaveMenuOpen" class="submenu">
+        <button (click)="showLeaveDetails()">
+          <i class="fas fa-info-circle"></i> Leave Details
+        </button>
+        <button (click)="showLeaveSummary()">
+          <i class="fas fa-chart-bar"></i> Leave Report
+        </button>
+      </div>
+          <button class="active" (click)="showServiceRequests()">
+            <i class="fas fa-tools"></i> Service Requests
+          </button>
+
+          <button (click)="showDekstopSupport()">
+            <i class="fas fa-desktop"></i> Desktop Support
+          </button>
+          
+          <button (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+              
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="header">
+          <h2>Welcome! {{ employee?.employeename }}</h2>
+        </div>
+      
+        <div class="filter-options">
+          <h3>Filter Service Requests</h3>
+          
+          <!-- Button to toggle filter visibility -->
+          <button class="toggle-button" (click)="toggleFilters()">
+            {{ filtersVisible ? 'Hide Filters' : 'Show Filters' }}
+          </button>
+        
+          <!-- Filter options container -->
+          <div *ngIf="filtersVisible" class="filter-container">
+            
+            <div class="filter-inputs"> 
+              <div class="date-range">
+                <label for="dateFrom">From:</label>
+                <input type="date" id="dateFrom" [(ngModel)]="filter.dateFrom" />
+              </div>
+        
+              <div class="date-range">
+                <label for="dateTo">To:</label>
+                <input type="date" id="dateTo" [(ngModel)]="filter.dateTo" />
+              </div>
+        
+              <button (click)="applyDateFilter()">Apply Date Filter</button>
+            </div>
+        
+            <div class="filter-inputs"> 
+              <div class="month-range">
+                <label for="monthFrom">Month From:</label>
+                <input type="month" id="monthFrom" [(ngModel)]="filter.monthFrom" />
+              </div>
+        
+              <div class="month-range">
+                <label for="monthTo">Month To:</label>
+                <input type="month" id="monthTo" [(ngModel)]="filter.monthTo" />
+              </div>
+        
+              <button (click)="applyMonthFilter()">Apply Month Filter</button>
+            </div>
+              <button (click)="resetFilters()">Reset Filters</button>
+          </div>
+        </div>
+        
+        <h2>Service Requests</h2>
+        <ul>
+          <li *ngFor="let id of filteredServiceRequestIds">
+            <span (click)="toggleServiceRequestDetails(id)" style="cursor: pointer;">
+              Service Request ID: {{ id }}
+              <i [class]="expandedServiceRequestId === id ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+            </span>
+        
+            <!-- Always show the date -->
+            <p>
+              <strong>Date:</strong> {{ getFormattedDate(serviceRequestDetails[id]?.date) }}
+            </p>
+          
+            <div *ngIf="expandedServiceRequestId === id">
+              <table class="service-request-table">
+                <tr>
+                  <th>Field</th>
+                  <th>Value</th>
+                </tr>
+                <tr>
+                  <td><strong>Title:</strong></td>
+                  <td>{{ serviceRequestDetails[id]?.title }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Client:</strong></td>
+                  <td>{{ serviceRequestDetails[id]?.client }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Instance Name:</strong></td>
+                  <td>{{ serviceRequestDetails[id]?.instanceName }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Product/Team:</strong></td>
+                  <td>{{ serviceRequestDetails[id]?.productTeam }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Component:</strong></td>
+                  <td>{{ serviceRequestDetails[id]?.component }}</td>
+                </tr>
+            
+                <!-- Additional details displayed in table format based on subtype -->
+                <ng-container *ngIf="serviceRequestDetails[id]?.subtype === 'Bug'; else changeRequestOrSupportDetails">
+                  <tr>
+                    <td><strong>Severity:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.severity }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Priority:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.priority }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Phase:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.phase }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Found In:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.foundIn }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Identified By AppBots:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.Identified_By_appBots }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Test Environment:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.test_Environment }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Assigned To:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.assigned_To }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Planned Release Version:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.planned_Release_Version }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Detailed Description:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.detailed_Description }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Steps to Reproduce:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.steps_To_Reproduce }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Expected Result:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.expected_Result }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Actual Result:</strong></td>
+                    <td>{{ serviceRequestDetails[id]?.actual_Result }}</td>
+                  </tr>
+                </ng-container>
+            
+                <ng-template #changeRequestOrSupportDetails>
+                  <ng-container *ngIf="serviceRequestDetails[id]?.subtype === 'Change Request'; else supportRequestDetails">
+                    <tr>
+                      <td><strong>Severity:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.severity }}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Priority:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.priority }}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Identified By AppBots:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.identifiedBy || 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Test Environment:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.testEnvironment || 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Assigned To:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.assignedTo || 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Planned Release Version:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.plannedReleaseVersion || 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Detailed Description:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.detailedDescription || 'N/A' }}</td>
+                    </tr>
+                  </ng-container>
+            
+                  <ng-template #supportRequestDetails>
+                    <tr>
+                      <td><strong>Priority:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.priority }}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Instance Name:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.instanceName || 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Component:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.component || 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Assigned To:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.assignedTo || 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Detailed Description:</strong></td>
+                      <td>{{ serviceRequestDetails[id]?.detailedDescription || 'N/A' }}</td>
+                    </tr>
+                  </ng-template>
+                </ng-template>
+              </table>
+            </div>
+            
+          </li>
+        </ul>
+        <!-- Display the no documents message if it exists -->
+  <div *ngIf="noDocumentsMessage" class="no-docs-message">
+    {{ noDocumentsMessage }}
+  </div>
+        <app-chatbot></app-chatbot>
+      </div>
+      
+  
