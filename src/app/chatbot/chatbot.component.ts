@@ -277,8 +277,6 @@ submitInput(): void {
     this.userInput = ''; // Clear input field after successful validation and processing
 }
 
-
-
 checkEmployeeExistsAndProcess(employeeId: string): void {
   this.couchdbService.checkEmployeeExists(employeeId).subscribe(exists => {
       if (!exists) {
@@ -1011,6 +1009,7 @@ submitBugTicket(): void {
   // Prepare the ticket document
   const ticketDocument: any = {
     _id: ticketId,
+    data: {
     type: "SR",
     subtype: "Bug",
     employeeId: employeeId,
@@ -1032,7 +1031,8 @@ submitBugTicket(): void {
     steps_To_Reproduce: stepsToReproduce,
     expected_Result: expectedResult,
     actual_Result: actualResult,
-    date: new Date().toISOString(),
+    date: new Date().toISOString()
+    }
   };
 
   // Step 1: Handle file upload, if a screenshot is selected
@@ -1090,6 +1090,7 @@ submitChangeRequest(): void {
   // Prepare the ticket document
   const ticketDocument: any = {
     _id: ticketId,
+    data: {
     type: "SR",
     subtype: "Change Request",
     employeeId: employeeId,
@@ -1107,6 +1108,7 @@ submitChangeRequest(): void {
     plannedReleaseVersion: plannedReleaseVersion,
     detailedDescription: detailedDescription,
     date: new Date().toISOString()
+    }
   };
 
   // Step 1: Handle file upload, if a screenshot is selected
@@ -1159,6 +1161,7 @@ submitSupportRequest(): void {
   // Prepare the ticket document
   const ticketDocument: any = {
     _id: ticketId,
+    data: {
     type: "SR",
     subtype: "Service Request",
     employeeId: employeeId,
@@ -1171,6 +1174,7 @@ submitSupportRequest(): void {
     assignedTo: assignedTo,
     detailedDescription: detailedDescription,
     date: new Date().toISOString()
+    }
   };
 
   // Step 1: Handle file upload, if a screenshot is selected
@@ -1244,6 +1248,7 @@ submitDesktopSupportRequest(): void {
 
   const supportRequestDocument: any = {
     _id: ticketId,
+    data: {
     type: "DS",
     subtype: "Desktop Support",
     employeeId: employeeId,
@@ -1253,7 +1258,8 @@ submitDesktopSupportRequest(): void {
     location: location,
     expectedDate: expectedDate,
     problemDescription: problemDescription,
-    date: new Date().toISOString(),
+    date: new Date().toISOString()
+    }
   };
 
   // Handle screenshot if present
