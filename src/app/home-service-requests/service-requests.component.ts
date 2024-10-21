@@ -266,8 +266,8 @@ loadServiceRequestDetails(id: string): void {
     (response) => {
       this.serviceRequestDetails[id] = response; // Cache the fetched details
       // Ensure the date is initialized here
-      if (!this.serviceRequestDetails[id]?.date) {
-        this.serviceRequestDetails[id].date = response.date || ''; // Initialize the date
+      if (!this.serviceRequestDetails[id]?.data?.date) {
+        this.serviceRequestDetails[id].data.date = response.data.date || ''; // Initialize the date
       }
     },
     (error) => {
