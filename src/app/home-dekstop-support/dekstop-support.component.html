@@ -51,51 +51,52 @@
         <h2>Desktop Support Requests</h2>
         <ul>
           <li *ngFor="let document of desktopSupportDocuments">
-            <!-- Display the title and a clickable element for expanding details -->
             <span (click)="toggleDesktopSupportDetails(document._id)" style="cursor: pointer;">
-             Desktop Support ID: {{ document._id }}
+              Desktop Support ID: {{ document._id }}
               <i [class]="expandedDesktopDocumentId === document._id ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
             </span>
-      
+        
             <p>
-              <strong>Date:</strong> {{getFormattedDate(document.date)}}
+              <strong>Date:</strong> {{ getFormattedDate(document.data.date) }}
             </p>
-
-           <!-- Conditionally display the details if the document is clicked -->
-<div *ngIf="expandedDesktopDocumentId === document._id" class="document-details">
-  <table class="document-details-table">
-      <tbody>
-          <tr>
-              <th>Contact Number</th>
-              <td>{{ document.contactNumber }}</td>
-          </tr>
-          <tr>
-              <th>Location</th>
-              <td>{{ document.location }}</td>
-          </tr>
-          <tr>
-              <th>Expected Date</th>
-              <td>{{ document.expectedDate }}</td>
-          </tr>
-          <tr>
-              <th>Problem Description</th>
-              <td>{{ document.problemDescription }}</td>
-          </tr>
-          <tr>
-              <th>Date</th>
-              <td>{{ document.date }}</td>
-          </tr>
-          <!-- Add any other specific fields you want to display here -->
-      </tbody>
-  </table>
-</div>
-
+        
+            <div *ngIf="expandedDesktopDocumentId === document._id" class="document-details">
+              <table class="document-details-table">
+                <tbody>
+                  <tr>
+                    <th>Module</th>
+                    <td>{{ document.data.module }}</td>
+                  </tr>
+                  <tr>
+                    <th>Title</th>
+                    <td>{{ document.data.title }}</td>
+                  </tr>
+                  <tr>
+                    <th>Contact Number</th>
+                    <td>{{ document.data.contactNumber }}</td>
+                  </tr>
+                  <tr>
+                    <th>Location</th>
+                    <td>{{ document.data.location }}</td>
+                  </tr>
+                  <tr>
+                    <th>Expected Date</th>
+                    <td>{{ document.data.expectedDate }}</td>
+                  </tr>
+                  <tr>
+                    <th>Problem Description</th>
+                    <td>{{ document.data.problemDescription }}</td>
+                  </tr>
+                  <tr>
+                    <th>Date</th>
+                    <td>{{ getFormattedDate(document.data.date) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </li>
         </ul>
       </div>
-      
-      
     <app-chatbot></app-chatbot>
-
   </div>
   
