@@ -24,19 +24,21 @@ interface LeaveDocument {
 }
 
 // Define an interface for the desktop support document
-interface DesktopSupportDocument {
+export interface DesktopSupportDocument {
   _id: string;
   _rev: string;
-  type: string;
-  subtype: string;
-  employeeId: string;
-  module: string;
-  title: string;
-  contactNumber: string;
-  location: string;
-  expectedDate: string;
-  problemDescription: string;
-  date: string;
+  data: {
+    type: string;
+    subtype: string;
+    employeeId: string;
+    module: string;
+    title: string;
+    contactNumber: string;
+    location: string;
+    expectedDate: string;
+    problemDescription: string;
+    date: string; // Or Date if you convert it later
+  };
 }
 
 @Component({
@@ -168,15 +170,14 @@ export class DekstopSupportComponent implements OnInit, OnDestroy {
   fetchDesktopSupportDocuments(employeeId: string): void {
     const desktopSupportUrl = `https://192.168.57.185:5984/employee-db/_design/desktop_support/_view/by_employee?key=${encodeURIComponent('"' + employeeId + '"')}&include_docs=true`;
     const headers = this.getHeaders(); // Method that generates headers with authorization
-
+  
     // Fetch Desktop Support documents based on employee ID
-    this.http.get<{ rows: { doc: DesktopSupportDocument }[] }>(desktopSupportUrl, { headers }).subscribe(
+    this.http.get<{ rows: { doc: any }[] }>(desktopSupportUrl, { headers }).subscribe(
       (response) => {
-        console.log('Response:', response); // Debugging log for full response
+     
         if (response.rows && response.rows.length > 0) {
           // Extract documents
           this.desktopSupportDocuments = response.rows.map(row => row.doc);
-          console.log('Desktop Support Documents:', this.desktopSupportDocuments);
         } else {
           console.error('No Desktop Support documents found for this employee.');
           this.desktopSupportDocuments = []; // Ensure this is empty if no documents found
@@ -187,6 +188,7 @@ export class DekstopSupportComponent implements OnInit, OnDestroy {
       }
     );
   }
+  
 
   listenForChanges(): void {
     // Polling using RxJS timer and switchMap
