@@ -100,7 +100,7 @@
         
             <!-- Always show the date -->
             <p>
-              <strong>Date:</strong> {{ getFormattedDate(serviceRequestDetails[id]?.date) }}
+              <strong>Date:</strong> {{ getFormattedDate(serviceRequestDetails[id]?.data?.date) }}
             </p>
           
             <div *ngIf="expandedServiceRequestId === id">
@@ -111,129 +111,129 @@
                 </tr>
                 <tr>
                   <td><strong>Title:</strong></td>
-                  <td>{{ serviceRequestDetails[id]?.title }}</td>
+                  <td>{{ serviceRequestDetails[id]?.data?.title }}</td>
                 </tr>
                 <tr>
                   <td><strong>Client:</strong></td>
-                  <td>{{ serviceRequestDetails[id]?.client }}</td>
+                  <td>{{ serviceRequestDetails[id]?.data?.client }}</td>
                 </tr>
                 <tr>
                   <td><strong>Instance Name:</strong></td>
-                  <td>{{ serviceRequestDetails[id]?.instanceName }}</td>
+                  <td>{{ serviceRequestDetails[id]?.data?.instanceName }}</td>
                 </tr>
                 <tr>
                   <td><strong>Product/Team:</strong></td>
-                  <td>{{ serviceRequestDetails[id]?.productTeam }}</td>
+                  <td>{{ serviceRequestDetails[id]?.data?.productTeam }}</td>
                 </tr>
                 <tr>
                   <td><strong>Component:</strong></td>
-                  <td>{{ serviceRequestDetails[id]?.component }}</td>
+                  <td>{{ serviceRequestDetails[id]?.data?.component }}</td>
                 </tr>
             
                 <!-- Additional details displayed in table format based on subtype -->
-                <ng-container *ngIf="serviceRequestDetails[id]?.subtype === 'Bug'; else changeRequestOrSupportDetails">
+                <ng-container *ngIf="serviceRequestDetails[id]?.data?.subtype === 'Bug'; else changeRequestOrSupportDetails">
                   <tr>
                     <td><strong>Severity:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.severity }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.severity }}</td>
                   </tr>
                   <tr>
                     <td><strong>Priority:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.priority }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.priority }}</td>
                   </tr>
                   <tr>
                     <td><strong>Phase:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.phase }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.phase }}</td>
                   </tr>
                   <tr>
                     <td><strong>Found In:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.foundIn }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.foundIn }}</td>
                   </tr>
                   <tr>
                     <td><strong>Identified By AppBots:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.Identified_By_appBots }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.Identified_By_appBots }}</td>
                   </tr>
                   <tr>
                     <td><strong>Test Environment:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.test_Environment }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.test_Environment }}</td>
                   </tr>
                   <tr>
                     <td><strong>Assigned To:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.assigned_To }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.assigned_To }}</td>
                   </tr>
                   <tr>
                     <td><strong>Planned Release Version:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.planned_Release_Version }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.planned_Release_Version }}</td>
                   </tr>
                   <tr>
                     <td><strong>Detailed Description:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.detailed_Description }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.detailed_Description }}</td>
                   </tr>
                   <tr>
                     <td><strong>Steps to Reproduce:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.steps_To_Reproduce }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.steps_To_Reproduce }}</td>
                   </tr>
                   <tr>
                     <td><strong>Expected Result:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.expected_Result }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.expected_Result }}</td>
                   </tr>
                   <tr>
                     <td><strong>Actual Result:</strong></td>
-                    <td>{{ serviceRequestDetails[id]?.actual_Result }}</td>
+                    <td>{{ serviceRequestDetails[id]?.data?.actual_Result }}</td>
                   </tr>
                 </ng-container>
             
                 <ng-template #changeRequestOrSupportDetails>
-                  <ng-container *ngIf="serviceRequestDetails[id]?.subtype === 'Change Request'; else supportRequestDetails">
+                  <ng-container *ngIf="serviceRequestDetails[id]?.data?.subtype === 'Change Request'; else supportRequestDetails">
                     <tr>
                       <td><strong>Severity:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.severity }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.severity }}</td>
                     </tr>
                     <tr>
                       <td><strong>Priority:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.priority }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.priority }}</td>
                     </tr>
                     <tr>
                       <td><strong>Identified By AppBots:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.identifiedBy || 'N/A' }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.identifiedBy || 'N/A' }}</td>
                     </tr>
                     <tr>
                       <td><strong>Test Environment:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.testEnvironment || 'N/A' }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.testEnvironment || 'N/A' }}</td>
                     </tr>
                     <tr>
                       <td><strong>Assigned To:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.assignedTo || 'N/A' }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.assignedTo || 'N/A' }}</td>
                     </tr>
                     <tr>
                       <td><strong>Planned Release Version:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.plannedReleaseVersion || 'N/A' }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.plannedReleaseVersion || 'N/A' }}</td>
                     </tr>
                     <tr>
                       <td><strong>Detailed Description:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.detailedDescription || 'N/A' }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.detailedDescription || 'N/A' }}</td>
                     </tr>
                   </ng-container>
             
                   <ng-template #supportRequestDetails>
                     <tr>
                       <td><strong>Priority:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.priority }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.priority }}</td>
                     </tr>
                     <tr>
                       <td><strong>Instance Name:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.instanceName || 'N/A' }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.instanceName || 'N/A' }}</td>
                     </tr>
                     <tr>
                       <td><strong>Component:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.component || 'N/A' }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.component || 'N/A' }}</td>
                     </tr>
                     <tr>
                       <td><strong>Assigned To:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.assignedTo || 'N/A' }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.assignedTo || 'N/A' }}</td>
                     </tr>
                     <tr>
                       <td><strong>Detailed Description:</strong></td>
-                      <td>{{ serviceRequestDetails[id]?.detailedDescription || 'N/A' }}</td>
+                      <td>{{ serviceRequestDetails[id]?.data?.detailedDescription || 'N/A' }}</td>
                     </tr>
                   </ng-template>
                 </ng-template>
