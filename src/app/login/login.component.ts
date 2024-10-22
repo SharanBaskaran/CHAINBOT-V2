@@ -16,7 +16,7 @@ export class LoginComponent {
 
   onSubmit(): void {
     // Check if the credentials are for the admin
-    if (this.username === 'admin' && this.password === 'chainsys') {
+    if (this.username === 'admin' && this.password === 'Chainsys@1998') {
       this.router.navigate(['/admin']);
       console.log('Navigating to admin');
 
