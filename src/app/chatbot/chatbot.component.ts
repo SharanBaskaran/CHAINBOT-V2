@@ -168,64 +168,58 @@ selectDropdownOption(event: Event): void {
 }
 
 submitInput(): void {
-    if (!this.userInput.trim()) {
-        this.displayErrorMessage('Please enter a value');
+  if (!this.userInput.trim()) {
+    this.displayErrorMessage('Please enter a value');
+    return;
+}
+
+if (this.currentNode.text === "Contact Number") {
+    const phoneNumber = this.userInput.trim();
+
+    if (!/^\d+$/.test(phoneNumber)) {
+        this.displayErrorMessage('The phone number should only contain numbers.');
         return;
     }
 
-    // Add the user's input to the chat before validation
-    this.addMessage('user', this.userInput);
+    if (phoneNumber.length !== 10) {
+        this.displayErrorMessage('The phone number should be exactly 10 digits long.');
+        return;
+    }
+}
 
-    if (this.currentNode.text === "Contact Number") {
-        const phoneNumber = this.userInput.trim();
-
-        // Check if input contains only numbers
-        if (!/^\d+$/.test(phoneNumber)) {
-            this.displayErrorMessage('The phone number should only contain numbers.');
-            return; // Exit to prevent further processing
-        }
-
-        // Check if input is exactly 10 digits
-        if (phoneNumber.length !== 10) {
-            this.displayErrorMessage('The phone number should be exactly 10 digits long.');
-            return; // Exit to prevent further processing
-        }
+if (this.currentNode.text === "Please provide the start date for your leave. (Format: YYYY-MM-DD)") {
+    if (!this.validateDate(this.userInput)) {
+        return;
     }
 
-    if (this.currentNode.text === "Please provide the start date for your leave. (Format: YYYY-MM-DD)") {
-        if (!this.validateDate(this.userInput)) {
-            return; // Exit if date is invalid, input will remain
-        }
+    const startDate = new Date(this.userInput);
+    const leaveDays = parseInt(this.Detials['No. of days'], 10);
 
-        const startDate = new Date(this.userInput);
-        const leaveDays = parseInt(this.Detials['No. of days'], 10);
+    const employeeId = this.Detials['Please provide your employee ID'];
+    this.checkOverlappingLeaveDates(employeeId, this.userInput, leaveDays);
 
-        // Call the method to check for overlapping leave dates
-        const employeeId = this.Detials['Please provide your employee ID'];
-        this.checkOverlappingLeaveDates(employeeId, this.userInput, leaveDays);
-        return; // Exit to prevent further processing until validation is complete
+    // Return here to avoid adding the message twice. `addMessage` is inside `checkOverlappingLeaveDates`.
+    return;
+}
+
+if (this.currentNode.text === "Please provide the end date for your leave. (Format: YYYY-MM-DD)") {
+    if (!this.validateDate(this.userInput)) {
+        return;
     }
 
-    if (this.currentNode.text === "Please provide the end date for your leave. (Format: YYYY-MM-DD)") {
-        if (!this.validateDate(this.userInput)) {
-            return; // Exit if date is invalid
-        }
+    const inputDate = new Date(this.userInput);
+    const startDate = new Date(this.Detials['Please provide the start date for your leave. (Format: YYYY-MM-DD)']);
+    const leaveDays = parseInt(this.Detials['No. of days'], 10);
+    const calculatedEndDate = new Date(startDate);
+    calculatedEndDate.setDate(startDate.getDate() + leaveDays - 1);
 
-        const inputDate = new Date(this.userInput);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        inputDate.setHours(0, 0, 0, 0);
-
-        const startDate = new Date(this.Detials['Please provide the start date for your leave. (Format: YYYY-MM-DD)']);
-        const leaveDays = parseInt(this.Detials['No. of days'], 10);
-        const calculatedEndDate = new Date(startDate);
-        calculatedEndDate.setDate(startDate.getDate() + leaveDays - 1);
-
-        if (inputDate.toDateString() !== calculatedEndDate.toDateString()) {
-            this.displayErrorMessage(`The end date should be ${calculatedEndDate.toISOString().split('T')[0]}`);
-            return; // Exit to prevent further processing
-        }
+    if (inputDate.toDateString() !== calculatedEndDate.toDateString()) {
+        this.addMessage('user', this.userInput);
+        this.displayErrorMessage(`The end date should be ${calculatedEndDate.toISOString().split('T')[0]}`);
+        this.userInput = '';
+        return;
     }
+}
 
     if (this.currentNode.text === "No. of days") {
         if (!this.validateLeaveDays(this.userInput)) {
@@ -267,6 +261,9 @@ submitInput(): void {
     // All validations passed, process the input
     this.errorMessage = '';
     this.Detials[this.currentNode.text] = this.userInput;
+
+    // Add the user's input to the chat after validation
+    this.addMessage('user', this.userInput);
 
     if (this.currentNode.text === "Please provide your employee ID") {
         this.checkEmployeeEligibility(this.userInput);
@@ -312,6 +309,7 @@ checkOverlappingLeaveDates(employeeId: string, startDate: string, leaveDays: num
         });
   
         if (hasOverlappingLeave) {
+          this.addMessage('user', this.userInput);
           this.displayErrorMessage('You have already applied for leave on the selected dates.');
           this.userInput = ''; // Clear input field after successful validation and processing
           return;
@@ -400,6 +398,7 @@ validateDate(date: string): boolean {
   // Regex to ensure the date is in the format YYYY-MM-DD
   const datePattern = /^\d{4}-\d{2}-\d{2}$/;
   if (!datePattern.test(date)) {
+    this.addMessage('user', this.userInput);
     errors.push('Please enter a valid date in the format YYYY-MM-DD');
     this.userInput = ''; // Clear input field after successful validation and processing
   }
@@ -410,12 +409,14 @@ validateDate(date: string): boolean {
 
   // Ensure year is 2024
   if (year !== currentYear) {
+    this.addMessage('user', this.userInput);
     errors.push(`The year must be ${currentYear}.`);
     this.userInput = ''; // Clear input field after successful validation and processing
 
   }
   // Ensure the month is between 01 and 12
   if (month < 1 || month > 12) {
+    this.addMessage('user', this.userInput);
     errors.push('The month must be between 01 and 12.');
     this.userInput = ''; // Clear input field after successful validation and processing
 
@@ -423,6 +424,7 @@ validateDate(date: string): boolean {
 
   // Ensure the day is between 01 and 31
   if (day < 1 || day > 31) {
+    this.addMessage('user', this.userInput);
     errors.push('The day must be between 01 and 31.');
     this.userInput = ''; // Clear input field after successful validation and processing
 
@@ -459,12 +461,14 @@ validateDate(date: string): boolean {
 
   // Check if input date is within the valid range
   if (inputDate < startOfRange) {
+    this.addMessage('user', this.userInput);
     errors.push(`The start date must be above ${startOfRange.toISOString().split('T')[0]}.`);
     this.userInput = ''; // Clear input field after successful validation and processing
   }
 
   // Check if input date is within the current year
   if (inputDate > endOfYear) {
+    this.addMessage('user', this.userInput);
     errors.push(`The date must not be beyond ${endOfYear.toISOString().split('T')[0]}.`);
     this.userInput = ''; // Clear input field after successful validation and processing
   }
@@ -1291,21 +1295,6 @@ toggleMinimize(event?: Event): void {
     event.stopPropagation();
   }
   this.isMinimized = !this.isMinimized;
-}
-
-closeChat(event?: Event): void {
-  const confirmClose = confirm("Are you sure you want to close the chat?");
-  if (confirmClose) {
-    if (event) {
-      event.stopPropagation();
-    }
-    // Preserve the initial message and clear the rest
-    if (this.conversation.length > 0) {
-      this.conversation = [this.conversation[0]];
-    }
-
-    this.isMinimized = !this.isMinimized;
-  }
 }
 
 // Flag to control automatic scrolling
