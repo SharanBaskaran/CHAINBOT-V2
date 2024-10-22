@@ -3,7 +3,6 @@
     <div class="background-image"></div>
     <span class="chat-title">ChainBot</span>
     <button class="minimize-btn" (click)="toggleMinimize($event)">-</button>
-    <button class="close-btn" (click)="closeChat($event)">x</button>
   </div>
   <div class="chat-content" id="chat-content" #chatContent>
     <div *ngFor="let message of conversation" class="message" [ngClass]="{ 'user-message': message.speaker === 'user', 'bot-message': message.speaker === 'bot' }">
